@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Package options -->
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <Authors>TraceParts Team</Authors>
+    <Company>TraceParts</Company>
+    <Description>ASP.NET Core middleware for hosting OpenTelemetry .NET Prometheus Exporter</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2001-2024 TraceParts SAS - All Rights Reserved</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>$(PackageTags);prometheus;metrics</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- OmniSharp/VS Code requires TargetFrameworks to be in descending order for IntelliSense and analysis. -->
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <MinVerTagPrefix>coreunstable-</MinVerTagPrefix>
+    <DefineConstants>$(DefineConstants);PROMETHEUS_ASPNETCORE</DefineConstants>
+
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(RunningDotNetPack)' != 'true'">
+    <ProjectReference Include="$(RepoRoot)\src\OpenTelemetry\OpenTelemetry.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RunningDotNetPack)' == 'true'">
+    <PackageReference Include="OpenTelemetry" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.HttpListener\Internal\PrometheusExporter.cs" Link="Includes/PrometheusExporter.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.HttpListener\Internal\PrometheusExporterEventSource.cs" Link="Includes/PrometheusExporterEventSource.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.HttpListener\Internal\PrometheusExporterOptions.cs" Link="Includes/PrometheusExporterOptions.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.HttpListener\Internal\PrometheusType.cs" Link="Includes/PrometheusType.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.HttpListener\Internal\PrometheusMetric.cs" Link="Includes/PrometheusMetric.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.HttpListener\Internal\PrometheusHeadersParser.cs" Link="Includes/PrometheusHeadersParser.cs" />
+    <Compile Include="$(RepoRoot)\src\Shared\ExceptionExtensions.cs" Link="Includes\ExceptionExtensions.cs" />
+    <Compile Include="$(RepoRoot)\src\Shared\Guard.cs" Link="Includes\Guard.cs" />
+    <Compile Include="$(RepoRoot)\src\Shared\Shims\NullableAttributes.cs" Link="Includes\Shims\NullableAttributes.cs" />
+
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.AspNetCore\PrometheusAspNetCoreOptions.cs" Link="PrometheusAspNetCoreOptions.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.AspNetCore\PrometheusExporterApplicationBuilderExtensions.cs" Link="PrometheusExporterApplicationBuilderExtensions.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.AspNetCore\PrometheusExporterEndpointRouteBuilderExtensions.cs" Link="PrometheusExporterEndpointRouteBuilderExtensions.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.AspNetCore\PrometheusExporterMeterProviderBuilderExtensions.cs" Link="PrometheusExporterMeterProviderBuilderExtensions.cs" />
+    <Compile Include="$(RepoRoot)\src\OpenTelemetry.Exporter.Prometheus.AspNetCore\PrometheusExporterMiddleware.cs" Link="PrometheusExporterMiddleware.cs" />
+  </ItemGroup>
+
+</Project>
+

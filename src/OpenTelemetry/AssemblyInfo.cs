@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("OpenTelemetry.Tests" + AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("OpenTelemetry.Tests.Stress.Metrics" + AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("Benchmarks" + AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("OpenTelemetry.Exporter.Prometheus.AspNetCore.Custom" + AssemblyInfo.PublicKey)]
 
 #if SIGNED
 file static class AssemblyInfo
